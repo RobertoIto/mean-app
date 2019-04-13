@@ -2,10 +2,13 @@
 
 <mat-card>
   <mat-form-field>
-    <!-- <textarea rows="6" [value]="'Test'"></textarea> -->
+    <input matInput placeholder="Title" [(ngModel)]="enteredTitle">
+  </mat-form-field>
+  <mat-form-field>
+          <!-- <textarea rows="6" [value]="'Test'"></textarea> -->
     <!-- <textarea rows="6" [value]="newPost" #postInput></textarea> -->
     <!-- Two way binding feature -->
-    <textarea matInput rows="6" [(ngModel)]="enteredValue"></textarea>
+    <textarea matInput placeholder="Content" rows="6" [(ngModel)]="enteredContent"></textarea>
   </mat-form-field>
 
   <!-- Event binding -->
