@@ -3,7 +3,12 @@
     <mat-expansion-panel-header>
       {{ postvar.title }}
     </mat-expansion-panel-header>
-    {{ postvar.content }}
+    <p>{{ postvar.content }}</p>
+
+    <mat-action-row>
+      <button mat-button color="primary">Edit</button>
+      <button mat-button color="warn">Delete</button>
+    </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
 
