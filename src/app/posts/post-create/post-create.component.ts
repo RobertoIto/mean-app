@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./post-create.component.css']
 })
 
-export class PostCreateComponent{
+export class PostCreateComponent {
   enteredValue = '';
   newPost = '';
 
