@@ -1,20 +1,32 @@
-<!-- <h2>The post create component</h2> -->
-
 <mat-card>
-  <mat-form-field>
-    <input matInput placeholder="Title" [(ngModel)]="enteredTitle">
-  </mat-form-field>
-  <mat-form-field>
-          <!-- <textarea rows="6" [value]="'Test'"></textarea> -->
-    <!-- <textarea rows="6" [value]="newPost" #postInput></textarea> -->
-    <!-- Two way binding feature -->
-    <textarea matInput placeholder="Content" rows="6" [(ngModel)]="enteredContent"></textarea>
-  </mat-form-field>
+  <form (submit)="onAddPost(postForm)" #postForm="ngForm">
+      <mat-form-field>
+        <input
+          matInput
+          name="title"
+          placeholder="Title"
+          ngModel
+          required
+          minlength="3"
+          #titleRef="ngModel">
+        <mat-error *ngIf="titleRef.invalid">Please enter a post title.</mat-error>
+        <!-- <mat-error *ngIf="postForm.getControl('title').invalid">{{getErrorMessage()}}</mat-error> -->
+      </mat-form-field>
+      <mat-form-field>
+        <textarea
+          matInput
+          name="content"
+          placeholder="Content"
+          rows="6"
+          ngModel
+          required
+          #contentRef="ngModel"></textarea>
+        <mat-error *ngIf="contentRef.invalid">Please enter a post content.</mat-error>
+      </mat-form-field>
 
-  <!-- Event binding -->
-  <!-- <button (click)="onAddPost(postInput)">Save Post</button> -->
-  <button mat-raised-button color="primary" (click)="onAddPost()">Save Post</button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit">Save Post</button>
+  </form>
 </mat-card>
-
-<!-- String interpolation -->
-<!-- <p>{{ newPost }}</p> -->

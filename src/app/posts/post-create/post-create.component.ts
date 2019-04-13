@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 import { Post } from '../post.model';
 
@@ -13,20 +14,16 @@ export class PostCreateComponent {
   enteredContent = '';
   @Output() postCreated = new EventEmitter<Post>();
 
-  // newPost = '';
-
-  // onAddPost(postInput: HTMLTextAreaElement) {
-  //   this.newPost = 'The user\'s post';
-  //   // console.dir(postInput);
-  //   this.newPost = postInput.value;
-  // }
-
-  onAddPost() {
-    // this.newPost = this.enteredValue;
+  // Now working with a form as a parameter, the angular code can
+  // access all the html controls.
+  onAddPost(form: NgForm) {
+    if (form.invalid) {
+      return;
+    }
 
     const post: Post = {
-      title: this.enteredTitle,
-      content: this.enteredContent
+      title: form.value.title,
+      content: form.value.content
     };
     this.postCreated.emit(post);
   }
