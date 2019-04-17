@@ -5,7 +5,9 @@
       {{ postvar.title }}
     </mat-expansion-panel-header>
     <p>{{ postvar.content }}</p>
-
+    <div class="image-preview">
+      <img [src]="postvar.imagePath" [alt]="postvar.title">
+    </div>
     <mat-action-row>
       <a mat-button [routerLink]="['/edit', postvar.id]" routerLinkActive="router-link-active" color="primary">Edit</a>
       <button mat-button color="warn" (click)="onDelete(postvar.id)">Delete</button>
