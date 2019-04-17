@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import { Post } from './post.model';
 
@@ -15,7 +16,7 @@ export class PostsService {
   private posts: Post[] = [];
   private postsUpdated = new Subject<Post[]>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getPosts() {
     this.http
@@ -35,6 +36,21 @@ export class PostsService {
       });
   }
 
+  getPost(id: string) {
+    // Clone the posts and use the find function
+    //return {...this.posts.find(p => p.id === id)};
+
+    // This code is to avoid that the record desappear after a
+    // refresh in the page post-create.component because the previous
+    // getPosts are called only in the post-list.component.
+    // Important: It is not possible to subscribe in a return so
+    // the subscription will be made in post-create.component.ts.
+    // We have to specify the return object from get through the parameters
+    // between <> because get is a generic method.
+    return this.http.get<{_id: string, title: string, content: string}>(
+      'http://localhost:3000/api/posts/' + id);
+  }
+
   getPostUpdateListener() {
     return this.postsUpdated.asObservable();
   }
@@ -48,6 +64,27 @@ export class PostsService {
         post.id = newPostId;
         this.posts.push(post);
         this.postsUpdated.next([...this.posts]);
+        // this command just redirects to the post-list.component page.
+        this.router.navigate(['/']);
+      });
+  }
+
+  updatePost(nId: string, sTitle: string, sContent: string) {
+    const post: Post = { id: nId, title: sTitle, content: sContent };
+    this.http
+      .put('http://localhost:3000/api/posts/' + nId, post)
+      .subscribe(response => {
+        console.log(response);
+        // This is another code to avoid get all the data again from
+        // the database server. After the successful update the
+        // response will return.
+        const updatedPosts = [...this.posts];
+        const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);
+        updatedPosts[oldPostIndex] = post;
+        this.posts = updatedPosts;
+        this.postsUpdated.next({...this.posts});
+        // this command just redirects to the post-list.component page.
+        this.router.navigate(['/']);
       });
   }
 
