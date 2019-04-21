@@ -5,7 +5,6 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Post } from '../post.model';
 import { PostsService } from '../posts.services';
 import { mimeType } from './mime-type.validator';
-import { post } from 'selenium-webdriver/http';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.services';
 
@@ -40,7 +39,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
       authStatus => {
         this.isLoading = false;
       }
-    )
+    );
     this.form = new FormGroup({
       title: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3)]}),
