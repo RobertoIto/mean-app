@@ -6,8 +6,8 @@ import { AuthService } from './auth.services';
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
-  // Intercepts any outgoing requests, next allows the interceptor to
-  // continue through our app.
+  // Intercepts any outgoing requests, modify them, and next allows the
+  // interceptor to continue through our app.
   // We are adding our token to the authorization header.
   // Bearer (O portador) is a convention and must be used for good
   // practice.
